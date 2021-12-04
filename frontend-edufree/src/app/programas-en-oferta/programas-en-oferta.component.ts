@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend.service';
+
+
+interface Programa {
+  nombre:string;
+  modalidad:string;
+
+}
+
 
 @Component({
   selector: 'app-programas-en-oferta',
@@ -7,9 +16,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgramasEnOfertaComponent implements OnInit {
 
-  constructor() { }
+  listaProgramas:Programa[] = [
+
+  ];
+
+  constructor(private servicioBackend:BackendService) {
+
+    
+    this.servicioBackend.getRequest('programa-academicos').subscribe(
+      {
+        next :(datos) => {
+          this.listaProgramas=datos;
+        },
+        error : (e:any) => {
+          console.log(e);
+        },
+        
+        complete : ()=>{
+
+        
+        }
+        
+
+      }
+    )
+
+  }
 
   ngOnInit(): void {
   }
+
 
 }

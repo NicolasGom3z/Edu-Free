@@ -1,1 +1,31 @@
-<p>login works!</p>
+
+<div class="w-100 vh-100 d-flex flex-column  align-items-center justify-content-center">
+
+  <h1 class="mb-5">EduFree Login</h1>
+
+  <form [formGroup]="formLogin">
+
+    <div class="mb-3" >
+      <label class="form-label">Correo</label>
+      <input  formControlName="codigo"
+              type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" 
+              > 
+      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contraseña</label>
+      <input  formControlName ="password"
+              type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3 form-check">
+      <input  
+              type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button   [disabled]="!formLogin.valid"
+              (click)="autenticar()" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>
+
+

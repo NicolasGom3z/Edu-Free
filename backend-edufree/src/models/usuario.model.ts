@@ -68,12 +68,12 @@ export class Usuario extends Entity {
     type: 'string',
     required: true,
   })
-  perfilAsigando: string;
+  perfilAsignado: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  creditos?: number;
+  creditos?: string;
 
   @property({
     type: 'string',

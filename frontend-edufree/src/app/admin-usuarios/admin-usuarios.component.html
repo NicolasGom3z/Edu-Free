@@ -1,1 +1,262 @@
-<p>admin-usuarios works!</p>
+<h2>Administrador de Usuarios</h2>
+
+
+<div>
+
+  <div class="my-4">
+
+    <div class="d-flex">
+      <label for="" class="mx-2">Seleccione tipo de usuario:</label>
+      <select   [(ngModel)] = "tipo"
+                name="" id="" class="mx-2">
+        <option [value]="option.codigo" *ngFor="let option of tiposUsuario">
+          {{option.texto}}
+        </option>
+      </select>
+      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
+      <button type="button" class="btn btn-warning mx-2" 
+              data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
+    </div>
+
+  </div>
+
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <th># Codigo</th>
+        <td>Nombre</td>
+        <td>Apellidos</td>
+        <td>Edad</td>
+        <td>Telefono</td>
+        <td>Dirección</td>
+        <td>Sexo</td>
+        <td>Email</td>
+        <td>Editar</td>
+        <td>Borrar</td>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let usuario of listaUsuarios">
+          <th>{{usuario.codigo}}</th>
+          <td>{{usuario.nombre}}</td>
+          <td>{{usuario.apellidos}}</td>
+          <td>{{usuario.edad}}</td>
+          <td>{{usuario.telefono}}</td>
+          <td>{{usuario.direccion}}</td>
+          <td>{{usuario.sexo}}</td>
+          <td>{{usuario.email}}</td>
+          <td>
+            <button type="button" class="btn btn-primary"
+                    data-bs-toggle="modal" data-bs-target="#editModal"        
+                    >Editar</button>
+          </td>
+          <td>
+
+            <button type="button" class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+
+
+<!-- Modal agregar-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupUsuario">
+
+
+          <div class="mb-3">
+            <label class="form-label">Codigo</label>
+            <input formControlName = "codigo"
+                    type="text" class="form-control" id="codigoInput" placeholder="Ingrese su ID">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre"
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input formControlName = "apellidos"
+                    type="text" class="form-control" id="apellidosInput" placeholder="Ingrese apellidos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Edad</label>
+            <input formControlName = "edad"
+                    type="text" class="form-control" id="edadInput" placeholder="Ingrese edad">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Telefono</label>
+            <input formControlName = "telefono"
+                    type="text" class="form-control" id="telefonoInput" placeholder="Ingrese telefono">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input formControlName = "direccion"
+                    type="text" class="form-control" id="direccionInput" placeholder="Ingrese dirección">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sexo</label>
+            <input formControlName = "sexo"
+                    type="text" class="form-control" id="sexoInput" placeholder="Ingrese sexo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input formControlName = "email"
+                    type="email" class="form-control" id="emailInput" placeholder="Ingrese email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input formControlName = "password"
+                    type="password" class="form-control" id="passwordInput" placeholder="Ingrese contraseña">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Creditos</label>
+            <input formControlName = "creditos"
+                    type="text" class="form-control" id="creditosInput" placeholder="Ingrese numero de creditos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Programa Academico</label>
+            <input formControlName = "programaAcademicoId"
+            type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese Programa Academico">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Perfil Id</label>
+            <input formControlName = "perfilId"
+            type="text" class="form-control" id="perfilIdInput" placeholder="Ingrese perfil Id">
+          </div>
+
+          
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click) = "crearUsuario()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Editar -->
+<!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupUsuario">
+
+
+          <div class="mb-3">
+            <label class="form-label">Codigo</label>
+            <input formControlName = "codigo"
+                    type="text" class="form-control" id="codigoInput" placeholder="Ingrese su ID">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre" 
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input formControlName = "apellidos"
+                    type="text" class="form-control" id="apellidosInput" placeholder="Ingrese apellidos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Edad</label>
+            <input formControlName = "edad"
+                    type="text" class="form-control" id="edadInput" placeholder="Ingrese edad">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Telefono</label>
+            <input formControlName = "telefono"
+                    type="text" class="form-control" id="telefonoInput" placeholder="Ingrese telefono">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input formControlName = "direccion"
+                    type="text" class="form-control" id="direccionInput" placeholder="Ingrese dirección">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sexo</label>
+            <input formControlName = "sexo"
+                    type="text" class="form-control" id="sexoInput" placeholder="Ingrese sexo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input formControlName = "email"
+                    type="email" class="form-control" id="emailInput" placeholder="Ingrese email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input formControlName = "password"
+                    type="password" class="form-control" id="passwordInput" placeholder="Ingrese contraseña">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Creditos</label>
+            <input formControlName = "creditos"
+                    type="text" class="form-control" id="creditosInput" placeholder="Ingrese numero de creditos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Programa Academico</label>
+            <input formControlName = "programaAcademicoId"
+            type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese Programa Academico">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Perfil Id</label>
+            <input formControlName = "perfilId"
+            type="text" class="form-control" id="perfilIdInput" placeholder="Ingrese perfil Id">
+          </div>
+
+          
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click) = "crearUsuario()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
