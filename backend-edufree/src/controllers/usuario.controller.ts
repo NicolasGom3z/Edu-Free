@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import { service } from '@loopback/core';
 import {
   Count,
@@ -23,6 +24,9 @@ import {Usuario} from '../models';
 import { Credenciales } from '../models/credenciales.model';
 import {UsuarioRepository} from '../repositories';
 import { SeguridadService } from '../services/seguridad.service';
+
+
+  //!  @authenticate('seguridad') 
 
 export class UsuarioController {
   constructor(
@@ -96,6 +100,8 @@ export class UsuarioController {
   ): Promise<Usuario> {
     return this.usuarioRepository.create(usuario);
   }
+
+
 
   @get('/usuarios/count')
   @response(200, {

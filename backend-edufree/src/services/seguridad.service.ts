@@ -8,6 +8,9 @@ const jwt = require('jsonwebtoken');
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class SeguridadService {
+
+  llaveSecreta : string = '@ksufidhu%bw&iudib232e#$';
+
   constructor(
     @repository(UsuarioRepository) public usuarioRepositorio : UsuarioRepository
     
@@ -45,12 +48,24 @@ export class SeguridadService {
       const token = jwt.sign({
         email : usuario.email,
         nombre : usuario.nombre
-      }, '@ksufidhu%bw&iudib232e#$');
+      }, this.llaveSecreta);
       return token;
     } catch (error) {
       return false;
     }
 
+
+  }
+
+  VerificarToken(token : string){
+
+    try {
+      
+      const datos = jwt.verify(token, this.llaveSecreta)
+      return datos;
+    } catch (error) {
+      return false;
+    }
 
   }
 
