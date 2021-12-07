@@ -15,3 +15,4 @@ export * from './usuario.controller';
 export * from './perfil.controller';
 export * from './perfil-por-modulos.controller';
 export * from './inventario-modulo.controller';
+export * from './login.controller';

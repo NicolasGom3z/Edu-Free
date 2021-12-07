@@ -6,3 +6,4 @@ export * from './perfil.model';
 export * from './inventario-modulo.model';
 export * from './usuarios-por-grupo.model';
 export * from './perfil-por-modulos.model';
+export * from './credenciales.model';

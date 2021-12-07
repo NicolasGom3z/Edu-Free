@@ -11,21 +11,31 @@ export class BackendService {
 
   constructor(private http:HttpClient) { }
 
-  getRequest(controlador:string):Observable<any>{
+  getRequest(nombreControlador:string):Observable<any>{
 
-    return this.http.get(this.rutaRaiz + '/' +controlador)
+    return this.http.get(this.rutaRaiz + '/' +nombreControlador)
 
   }
 
-  postRequest(controlador:string, datos :string){
+  postRequest(nombreControlador:string, datos :string){
 
     // const headers = new Headers({'Content-Type':'application/json'});
 
-    return this.http.post(this.rutaRaiz + '/' +controlador, 
+    return this.http.post(this.rutaRaiz + '/' +nombreControlador, 
                           datos, 
                           { headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
 
   }
+
+  // patchRequest(controlador:string, datos :string, id: string){
+
+  //   // const headers = new Headers({'Content-Type':'application/json'});
+
+  //   return this.http.patch(this.rutaRaiz + '/' +nombreControlador, 
+  //                         datos, 
+  //                         { headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
+
+  // }
 
 
 }

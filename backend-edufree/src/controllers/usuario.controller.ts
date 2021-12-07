@@ -1,3 +1,4 @@
+import { service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -16,15 +17,64 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {Usuario} from '../models';
+import { Credenciales } from '../models/credenciales.model';
 import {UsuarioRepository} from '../repositories';
+import { SeguridadService } from '../services/seguridad.service';
 
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
     public usuarioRepository : UsuarioRepository,
+
+    @service(SeguridadService)
+    public servicioSeguridad:SeguridadService
   ) {}
+
+  @post('/login',
+      {
+        responses:{
+          '200': {
+            description:"ok"
+          }
+        }
+      })
+      async login(@requestBody() credenciales:Credenciales ){
+
+        let usuarioEncontrado = await this.servicioSeguridad.ValidarUsuario(credenciales);
+
+        if(usuarioEncontrado){
+
+          const token = await this.servicioSeguridad.GenerarToken(usuarioEncontrado);
+
+          if(token){
+            return {
+              data: usuarioEncontrado, 
+              tk : token
+            }
+  
+          }else{
+            throw new HttpErrors[401]('Datos Invalidos');
+          }
+
+          
+        }else{
+
+          throw new HttpErrors[401]('Datos Invalidos');
+
+        }
+
+      }
+
+    @response(200, {
+      description: 'Usuario model instance',
+      content: {'application/json': {schema: getModelSchemaRef(Usuario)}},
+    })
+
+
+
 
   @post('/usuarios')
   @response(200, {
