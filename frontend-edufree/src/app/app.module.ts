@@ -7,14 +7,18 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProgramasEnOfertaComponent } from './programas-en-oferta/programas-en-oferta.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component'
+import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
+import { AdminGruposComponent } from './admin-grupos/admin-grupos.component';
+import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProgramasEnOfertaComponent,
-    AdminUsuariosComponent
+    AdminUsuariosComponent,
+    AdminGruposComponent,
+    AdminAsignaturasComponent
   ],
   imports: [
     BrowserModule,

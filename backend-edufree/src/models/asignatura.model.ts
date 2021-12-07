@@ -24,10 +24,10 @@ export class Asignatura extends Entity {
   descripcion: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  creditos: number;
+  creditos: string;
 
   @belongsTo(() => ProgramaAcademico)
   programaAcademicoId: string;

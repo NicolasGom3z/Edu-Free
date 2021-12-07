@@ -1,0 +1,120 @@
+
+<div *ngIf="servicioBackend.autorized; else templateNoAutorized">
+
+  <div class="my-4">
+
+    <div class="d-flex">
+    
+      
+      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
+      <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
+              data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
+    </div>
+
+  </div>
+
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <th># Codigo</th>
+        <td>Nombre</td>
+        <td>Horario</td>
+        <td>Editar</td>
+        <td>Borrar</td>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let grupo of listaGrupos">
+          <th>{{grupo.nombre}}</th>
+          <td>{{grupo.descripcion}}</td>
+          <td>{{grupo.horario}}</td>
+          
+  
+          <td>
+            <button type="button" class="btn btn-primary" (click)="entrarModoEdicion(grupo)"
+                    data-bs-toggle="modal" data-bs-target="#addModal"        
+                    >Editar</button>
+          </td>
+          <td>
+
+            <button   (click)="eliminarGrupo(grupo.id)"
+                      type="button" class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+
+
+<!-- Modal agregar-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupGrupo">
+
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre"
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre del grupo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripcion</label>
+            <input formControlName = "descripcion"
+                    type="text" class="form-control" id="descInput" placeholder="Ingrese descripcion">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Horario</label>
+            <input formControlName = "horario"
+                    type="text" class="form-control" id="apellidosInput" placeholder="Ingrese horario">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">AsignaturaId</label>
+            <input formControlName = "asignaturaId"
+                    type="text" class="form-control" id="edadInput" placeholder="Ingrese asignatura Id">
+          </div>
+
+          
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer" *ngIf="!modoEdicion; else botonEdit">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click)="crearGrupo()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-template #templateNoAutorized>
+
+  <h1>No estas autorizado</h1>
+
+</ng-template>
+
+
+<ng-template #botonEdit>
+  <div class="modal-footer">
+    <button   (click)="modoEdicion = false"
+              type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button   (click)="editarGrupo()"
+              type="button" class="btn btn-warning">Save changes</button>
+  </div>
+</ng-template>

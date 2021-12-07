@@ -1,0 +1,122 @@
+
+<div *ngIf="servicioBackend.autorized; else templateNoAutorized">
+
+  <div class="my-4">
+
+    <div class="d-flex">
+    
+      
+      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
+      <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
+              data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
+    </div>
+
+  </div>
+
+  <div>
+    <table class="table table-hover">
+      <thead>
+        <th>Nombre</th>
+        <td>Descripcion</td>
+        <td>Creditos</td>
+        <td>Asignatura</td>
+        <td>Editar</td>
+        <td>Borrar</td>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let asignatura of listaAsignaturas">
+          <th>{{asignatura.nombre}}</th>
+          <td>{{asignatura.descripcion}}</td>
+          <td>{{asignatura.creditos}}</td>
+          <td>{{asignatura.programaAcademicoId}}</td>
+          
+  
+          <td>
+            <button type="button" class="btn btn-primary" (click)="entrarModoEdicion(asignatura)"
+                    data-bs-toggle="modal" data-bs-target="#addModal"        
+                    >Editar</button>
+          </td>
+          <td>
+
+            <button   (click)="eliminarAsignatura(asignatura.id)"
+                      type="button" class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+
+
+<!-- Modal agregar-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupAsignatura">
+
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre"
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre del grupo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripcion</label>
+            <input formControlName = "descripcion"
+                    type="text" class="form-control" id="descInput" placeholder="Ingrese descripcion">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Creditos</label>
+            <input formControlName = "creditos"
+                    type="text" class="form-control" id="creditosInput" placeholder="Ingrese horario">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">AsignaturaId</label>
+            <input formControlName = "programaAcademicoId"
+                    type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese programa academico Id">
+          </div>
+
+          
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer" *ngIf="!modoEdicion; else botonEdit">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click)="crearAsignatura()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-template #templateNoAutorized>
+
+  <h1>No estas autorizado</h1>
+
+</ng-template>
+
+
+<ng-template #botonEdit>
+  <div class="modal-footer">
+    <button   (click)="modoEdicion = false"
+              type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button   (click)="editarAsignatura()"
+              type="button" class="btn btn-warning">Save changes</button>
+  </div>
+</ng-template>

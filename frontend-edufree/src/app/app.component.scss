@@ -1,0 +1,23 @@
+
+
+.cls-sidebar{
+  height: calc(100vh - 56px);
+
+  .cls-item {
+    cursor: pointer;
+
+    a{
+      transition: 0.5s all;
+    }
+    a:hover {
+      transform: scale(1.1);
+      background: #0d6efd;
+    }
+  }
+
+}
+
+.cls-body{
+  width: 100%;
+  overflow-y: scroll;
+}
