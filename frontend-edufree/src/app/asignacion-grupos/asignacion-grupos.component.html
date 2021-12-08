@@ -1,0 +1,56 @@
+
+<div class="d-flex flex-wrap">
+
+  <div *ngFor="let asignatura of listaAsignaturas" class="card m-3" style="width: 18rem;">
+    <!-- <img src="..." class="card-img-top" alt="..."> -->
+    <div class="card-body">
+      <h5 class="card-title">{{asignatura.nombre}}</h5>
+      
+      <button  (click)="obtenerAsignaciones(asignatura.id)"
+          data-bs-toggle="modal" data-bs-target="#asignarModal"
+          class="btn btn-primary">Ver grupos asignados</button>
+    </div>
+  </div>
+
+  
+
+</div>
+
+
+
+<!-- Modal asignar-->
+<div class="modal fade" id="asignarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Asignaciones</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <th>#Nombre</th>
+            <td>Horario</td>
+            <td>Programa</td>
+            
+          </thead>
+    
+          <tbody>
+            <tr *ngFor="let asignacion of listaAsignaciones">
+              <th>{{asignacion.nombre}}</th>
+              <td>{{asignacion.horario}}</td>
+              <td>{{asignacion.asignaturaId}}</td>
+              
+            
+            </tr>
+          </tbody>
+        </table>
+
+        
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

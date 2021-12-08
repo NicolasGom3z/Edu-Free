@@ -5,6 +5,7 @@ import { ProgramasEnOfertaComponent } from './programas-en-oferta/programas-en-o
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 import { AdminGruposComponent } from './admin-grupos/admin-grupos.component';
 import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas.component';
+import { AsignacionGruposComponent } from './asignacion-grupos/asignacion-grupos.component';
 
 const routes: Routes = [
   {
@@ -26,10 +27,14 @@ const routes: Routes = [
   {
     path: 'admin-grupos',
     component : AdminGruposComponent
-  ,},
+  },
   {
     path: 'admin-asignaturas',
     component : AdminAsignaturasComponent
+  },
+  {
+    path: 'grupos-asignados',
+    component : AsignacionGruposComponent
   }
 
 

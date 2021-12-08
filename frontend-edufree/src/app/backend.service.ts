@@ -38,6 +38,14 @@ export class BackendService {
           );
   }
 
+  getRequest2(nombreControlador:string,id:string):Observable<any>{
+
+    return this.http.get(this.rutaRaiz + '/' +nombreControlador + '/' + id + 'grupos',
+          { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`})}
+          
+          );
+  }
+
   postRequest(nombreControlador:string, datos :string){
 
     // const headers = new Headers({'Content-Type':'application/json'});
@@ -50,6 +58,21 @@ export class BackendService {
 
   }
   
+
+  postRequest2(nombreControlador:string,id:string, datos :string){
+
+    // const headers = new Headers({'Content-Type':'application/json'});
+
+    return this.http.post(this.rutaRaiz + '/' +nombreControlador + '/' + id + '/grupos', 
+                          datos, 
+                          { headers: new HttpHeaders(
+                            { 'Content-Type': 'application/json',
+                              'Authorization': `Bearer ${this.token}`})})
+
+  }
+  
+
+
   authenticateRequest(credenciales :string){
 
     // const headers = new Headers({'Content-Type':'application/json'});
@@ -81,6 +104,16 @@ export class BackendService {
                                 'Authorization': `Bearer ${this.token}`})})
   
   }
+  deleteRequest2(nombreControlador:string, id: string){
   
+  
+      return this.http.delete(this.rutaRaiz + '/' +nombreControlador +'/' + id + '/grupos' ,
+                            { headers: new HttpHeaders
+                              ({ 'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.token}`})})
+  
+  }
+  
+
 
 }

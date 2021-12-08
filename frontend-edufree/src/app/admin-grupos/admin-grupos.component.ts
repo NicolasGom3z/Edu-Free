@@ -11,7 +11,9 @@ import Swal from 'sweetalert2';
 export class AdminGruposComponent implements OnInit {
 
   listaGrupos:any = [];
+  listaAsignaturasGrupo:any = [];
   formGroupGrupo:any;
+  formGroupAsignaturasGrupo:any;
   modoEdicion = false;
   id = '';
 
@@ -26,6 +28,11 @@ export class AdminGruposComponent implements OnInit {
       descripcion: ['',Validators.required],
       horario : ['',Validators.required],
       asignaturaId : ['',Validators.required],
+
+    });
+    this.formGroupAsignaturasGrupo= this.formBuilder.group({
+  
+      asignaturaId : ['',Validators.required]
 
     });
 
@@ -223,4 +230,55 @@ export class AdminGruposComponent implements OnInit {
     );
 
   }
+
+  asignarAsignatura(){
+    
+    const asignatura = this.formGroupAsignaturasGrupo.getRawValue();
+
+    this.servicioBackend.postRequest(`asignaturas/${this.id}/grupos`,JSON.stringify(asignatura)).subscribe(
+
+      {
+        
+        next :(nuevaAsignacion) => {
+          this.listaAsignaturasGrupo.push(nuevaAsignacion);
+          
+          Swal.fire(
+            'Todo bien!',
+            'Asignatura agregada',
+            'success'
+          )
+        },
+        error : (e:any) => {
+          console.log(e);
+
+          if(e.statusCode == 401){
+
+            this.servicioBackend.autorized = true;
+            Swal.fire(
+              'Error',
+              'Usuario no autorizado',
+              'error'
+            )
+
+
+          }else{
+            Swal.fire(
+              'Upss!',
+              'Asignatura no agregada',
+              'error'
+            )
+          }
+
+        },
+        
+        complete : ()=>{
+
+        
+        }
+      }
+      
+    );
+  }
+
+
 }

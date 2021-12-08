@@ -9,7 +9,8 @@ import { ProgramasEnOfertaComponent } from './programas-en-oferta/programas-en-o
 import { HttpClientModule } from '@angular/common/http';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
 import { AdminGruposComponent } from './admin-grupos/admin-grupos.component';
-import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas.component'
+import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas.component';
+import { AsignacionGruposComponent } from './asignacion-grupos/asignacion-grupos.component'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas
     ProgramasEnOfertaComponent,
     AdminUsuariosComponent,
     AdminGruposComponent,
-    AdminAsignaturasComponent
+    AdminAsignaturasComponent,
+    AsignacionGruposComponent
   ],
   imports: [
     BrowserModule,

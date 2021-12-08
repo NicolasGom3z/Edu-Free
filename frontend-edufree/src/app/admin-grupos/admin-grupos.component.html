@@ -19,6 +19,7 @@
         <th># Codigo</th>
         <td>Nombre</td>
         <td>Horario</td>
+        <td>Asignatura</td>
         <td>Editar</td>
         <td>Borrar</td>
       </thead>
@@ -28,8 +29,14 @@
           <th>{{grupo.nombre}}</th>
           <td>{{grupo.descripcion}}</td>
           <td>{{grupo.horario}}</td>
+          <td>{{grupo.asignaturaId}}</td>
           
-  
+          <td>
+            <!-- <button type="button" class="btn btn-warning" (click)="entrarModoEdicion(grupo)"
+                    data-bs-toggle="modal" data-bs-target="#asignarModal"        
+                    >Asignar</button> -->
+          </td>
+
           <td>
             <button type="button" class="btn btn-primary" (click)="entrarModoEdicion(grupo)"
                     data-bs-toggle="modal" data-bs-target="#addModal"        
@@ -49,6 +56,37 @@
 </div>
 
 
+
+<!-- Modal asignar-->
+<div class="modal fade" id="asignarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupGrupo">
+
+
+          <div class="mb-3">
+            <label class="form-label">Asignatura Id</label>
+            <input formControlName = "asignaturaId"
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre del grupo">
+          </div>
+          
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer" *ngIf="!modoEdicion; else botonEdit">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click)="asignarAsignatura()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Modal agregar-->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
