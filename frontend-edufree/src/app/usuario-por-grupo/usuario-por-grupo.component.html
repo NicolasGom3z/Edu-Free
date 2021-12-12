@@ -1,12 +1,12 @@
 
 <div>
 
-  <div class="my-4">
+  <div class="my-4" [formGroup]="formGroupUsuariosGrupo">
 
     <div class="d-flex">
       <label for="tipoU" class="mx-2">Seleccione <strong>Usuario</strong> a asignar</label>
-      <select  name="" id="usuarioA" class="mx-2 w-25">
-        <option [value]="usuario['codigo']" *ngFor="let usuario of listaTodosLosUsuarios">
+      <select  name="" id="usuarioA" class="mx-2 w-25"  formControlName = "usuarioId">
+        <option [value]="usuario['id']" *ngFor="let usuario of listaTodosLosUsuarios">
           {{usuario['apellidos']}} {{usuario['nombre']}}
         </option>
       </select>
@@ -18,16 +18,30 @@
 
     <div class="d-flex mt-4">
       <label for="tipoU" class="mx-2">Seleccione <strong>Grupo</strong></label>
-      <select  name="" id="grupoA" class="mx-2 w-25">
-        <option [value]="grupo['codigo']" *ngFor="let grupo of listaGrupos">
+      <select  name="" id="grupoA" class="mx-2 w-25"  formControlName = "grupoId">
+        <option [value]="grupo['id']" *ngFor="let grupo of listaGrupos">
           {{grupo['nombre']}}
         </option>
       </select>
       
-      <button   (click)="crearRelacion()"
-                type="button" class="btn btn-warning mx-2" >Agregar</button>
+    </div>
+    <div class="d-flex mt-4">
+      <label for="tipoU" class="mx-2">Seleccione <strong>Programa Academico</strong></label>
+      <select  name="" id="grupoA" class="mx-2 w-25"  formControlName = "programaAcademico">
+        <option [value]="programa['id']" *ngFor="let programa of listaProgramas">
+          {{programa['nombre']}}
+        </option>
+      </select>
+      
+    </div>
+    <div class="mb-3 w-25">
+      <label class="form-label">Calificacion</label>
+      <input formControlName = "calificaciones"
+              type="text" class="form-control" id="codigoInput" placeholder="Ingrese calificacion">
     </div>
 
+    <button   (click)="crearRelacion()"
+              type="button" class="btn btn-warning mx-2" >Agregar</button>
   </div>
 
   <div>
@@ -41,9 +55,9 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let relacion of listaUsuariosPorGrupo">
-          <td>{{relacion['usuarioId']}}</td>
-          <td>{{relacion['grupoId']}}</td>
+        <tr *ngFor="let usuario of listaUsuariosPorGrupo">
+          <td>{{usuario.nombre}}</td>
+          <td>{{usuario.grupo}}</td>
           <!-- <th>{{usuario.codigo}}</th>
           <td>{{usuario.nombre}}</td>
           <td>{{usuario.apellidos}}</td>

@@ -6,15 +6,54 @@
     <div class="card-body">
       <h5 class="card-title">{{item.nombre}}</h5>
       <p class="card-text">Modalidad: {{item.modalidad}}</p>
-      
-      <p class="card-text">{{item.modalidad}}</p>
-      <p class="card-text">{{item.modalidad}}</p>
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      <p class="card-text">Tipo de programa: {{item.tipo}}</p>
+      <p class="card-text">Creditos Totales: {{item.creditosTotales}}</p>
+    
+      <!-- <button  
+      type="button" class="btn btn-primary"
+      data-bs-toggle="modal" data-bs-target="#grupos"
+      >Ver grupos </button> -->
     </div>
   </div>
 
   
 
+</div>
+
+<!-- modal ver grupos -->
+<div class="modal fade" id="grupos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Estudiantes por Grupo</h5>
+      </div>
+      <div class="modal-body">
+
+      <div>
+          <table class="table table-hover">
+            <thead>
+              <td>Nombre Grupo</td>
+              <td>Horario</td>
+            </thead>
+      
+            <tbody>
+              <tr *ngFor="let programa of listaProgramas">
+                <td>{{programa.nombre}}</td>
+                <td>{{programa.horario}}</td>
+                
+
+            
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer" >
+        
+      </div>
+    </div>
+  </div>
 </div>
 
 

@@ -6,7 +6,7 @@
     <div class="d-flex">
     
       
-      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
+      <!-- <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button> -->
       <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
               data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
     </div>
@@ -29,7 +29,7 @@
           <th>{{asignatura.nombre}}</th>
           <td>{{asignatura.descripcion}}</td>
           <td>{{asignatura.creditos}}</td>
-          <td>{{asignatura.programaAcademicoId}}</td>
+          <td>{{verPrograma(asignatura.programaAcademicoId)}}</td>
           
   
           <td>

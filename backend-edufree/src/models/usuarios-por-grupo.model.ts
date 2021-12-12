@@ -28,9 +28,9 @@ export class UsuariosPorGrupo extends Entity {
   programaAcademico: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  calificaciones?: number;
+  calificaciones?: string;
 
 
   constructor(data?: Partial<UsuariosPorGrupo>) {

@@ -264,4 +264,22 @@ export class AdminAsignaturasComponent implements OnInit {
 
   }
 
+  verPrograma(id:any){
+
+    let currentProgram:any;
+
+    for (const programa of this.listaProgramas) {
+
+      if (programa.id == id) {
+        
+        currentProgram = programa.nombre;
+        
+        return currentProgram;
+
+      }
+    }
+
+  }
+
+
 }

@@ -17,9 +17,9 @@ interface Programa {
 })
 export class ProgramasEnOfertaComponent implements OnInit {
 
-  listaProgramas:Programa[] = [
-
-  ];
+  listaProgramas:any = [];
+  listaTodosProgramas:any = [];
+  programaActual = '';
 
   constructor(
     private sidebarService:SidebarService,
@@ -27,13 +27,43 @@ export class ProgramasEnOfertaComponent implements OnInit {
 
     this.sidebarService.rutaActual = 'programas-en-oferta';
     
-    this.servicioBackend.getRequest('programa-academicos').subscribe(
-      {
+    // this.servicioBackend.getRequest('programa-academicos').subscribe(
+    //   {
+    //     next :(datos) => {
+    //       this.listaProgramas=datos;
+    //     },
+    //     error : (e:any) => {
+    //       console.log(e);
+    //     },
+        
+    //     complete : ()=>{
+
+        
+    //     }
+        
+
+    //   }
+    // )
+
+    this.obtenerProgramas();
+
+
+  }
+
+  
+  obtenerProgramas():void{
+
+    this.servicioBackend.getRequest('programa-academicos').subscribe({
+
         next :(datos) => {
-          this.listaProgramas=datos;
+          this.listaProgramas= datos;
+          this.listaTodosProgramas = datos;
+
         },
         error : (e:any) => {
           console.log(e);
+
+          
         },
         
         complete : ()=>{
@@ -42,13 +72,22 @@ export class ProgramasEnOfertaComponent implements OnInit {
         }
         
 
-      }
-    )
+      
+      
+    })
 
   }
 
-  
 
+  verGrupos(programa:any){
+
+    this.programaActual = programa;
+    this.listaTodosProgramas = programa.asignaturas;
+
+
+
+
+  }
 
 
   ngOnInit(): void {

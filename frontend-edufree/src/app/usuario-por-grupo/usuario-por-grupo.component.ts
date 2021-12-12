@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from '../backend.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario-por-grupo',
@@ -7,20 +9,37 @@ import { BackendService } from '../backend.service';
   styleUrls: ['./usuario-por-grupo.component.scss']
 })
 export class UsuarioPorGrupoComponent implements OnInit {
+  listaTodosLosUsuarios:any = [];
+  listaGrupos:any = [];
+  listaRelaciones:any = [];
+  listaUsuariosPorGrupo :any= [];
+  listaUsuariosGrupo:any = [];
+  listaProgramas:any =[];
+  formGroupUsuariosGrupo:any;
+  grupoActual:any = '';
+  constructor(private servicioBackend:BackendService,
+              private formBuilder:FormBuilder) {
+    
 
-  constructor(private servicioBackend:BackendService) {
+    this.formGroupUsuariosGrupo = this.formBuilder.group({
+  
+      grupoId: ['',Validators.required],
+      usuarioId: ['',Validators.required],
+      programaAcademico : ['',Validators.required],
+      calificaciones : ['',Validators.required],
+
+    });
     
     this.obtenerUsuarios();
     this.obtenerGrupos();
+    this.obtenerProgramas();
     this.obtenerUsuariosPorGrupo();
   }
 
   ngOnInit(): void {
   }
 
-  listaTodosLosUsuarios = [];
-  listaGrupos = [];
-  listaUsuariosPorGrupo = [];
+
 
   obtenerUsuarios():void{
 
@@ -46,14 +65,20 @@ export class UsuarioPorGrupoComponent implements OnInit {
       
     })
 
+  
+
+
+
+
+
   }
 
   obtenerGrupos():void{
 
-    // const filtro = {"include":[{"relation":"usuarios"}]};
+    const filtro = {"include":[{"relation":"usuarios"}]};
 
 
-    this.servicioBackend.getRequest('grupos').subscribe({
+    this.servicioBackend.getRequestfilter('grupos',JSON.stringify(filtro)).subscribe({
 
         next :(datos) => {
           this.listaGrupos= datos;
@@ -78,9 +103,13 @@ export class UsuarioPorGrupoComponent implements OnInit {
 
   }
 
+
+
   obtenerUsuariosPorGrupo():void{
 
-    this.servicioBackend.getRequest('usuarios-por-grupos').subscribe({
+    const filtro = {"where" : {"usuarioId": "61a6a08fca947d106cca2691"}}
+
+    this.servicioBackend.getRequestfilter('usuarios-por-grupos',JSON.stringify(filtro)).subscribe({
 
       next :(datos) => {
         
@@ -104,9 +133,87 @@ export class UsuarioPorGrupoComponent implements OnInit {
 
   }
 
+  obtenerProgramas():void{
+
+  
+
+    this.servicioBackend.getRequest('programa-academicos').subscribe({
+
+        next :(datos) => {
+          this.listaProgramas= datos;
+          
+        },
+        error : (e:any) => {
+          console.log(e);
+
+          
+        },
+        
+        complete : ()=>{
+
+        
+        }
+        
+
+      
+      
+    })
+
+  }
+
 
   crearRelacion(){
-    console.log('si');
+    
+    const relacion = this.formGroupUsuariosGrupo.getRawValue();
+    
+
+    this.servicioBackend.postRequest('usuarios-por-grupos',JSON.stringify(relacion)).subscribe(
+
+      {
+        
+        next :(nuevaRelacion) => {
+          this.listaGrupos.push(nuevaRelacion);
+          this.formGroupUsuariosGrupo.reset();
+          Swal.fire(
+            'Todo bien!',
+            'Grupo asignado',
+            'success'
+          )
+
+        },
+        error : (e:any) => {
+          console.log(e);
+
+          if(e.statusCode == 401){
+
+            this.servicioBackend.autorized = true;
+            Swal.fire(
+              'Error',
+              'Usuario no autorizado',
+              'error'
+            )
+
+
+          }else{
+            Swal.fire(
+              'Upss!',
+              'Usuario no agregado',
+              'error'
+            )
+          }
+
+        },
+        
+        complete : ()=>{
+
+        
+        }
+      }
+      
+    );
   }
+
+
+  
 
 }

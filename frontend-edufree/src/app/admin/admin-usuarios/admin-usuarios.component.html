@@ -78,7 +78,7 @@
 
           <div class="mb-3">
             <label class="form-label" >Perfil Asignado</label>
-            <select  formControlName = "perfilId"
+            <select  formControlName = "perfilId" 
                 class="mx-2">
               <option  *ngFor="let option of tiposUsuario"[value]="option.codigo">
                 {{option.texto}}
@@ -149,8 +149,13 @@
 
           <div class="mb-3">
             <label class="form-label">Programa Academico</label>
-            <input formControlName = "programaAcademicoId"
-            type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese Programa Academico">
+            <select  formControlName = "programaAcademicoId" 
+            class="mx-2">
+          <option  *ngFor="let programa of listaProgramas"[value]="programa.id">
+            {{programa.nombre}}
+            </option>
+            </select>
+
           </div>
 
           <!-- <div class="mb-3">

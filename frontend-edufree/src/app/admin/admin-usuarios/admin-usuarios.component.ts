@@ -49,6 +49,8 @@ export class AdminUsuariosComponent implements OnInit {
     }
   ]
 
+  listaProgramas: any = [];
+  listaTodosProgramas: any = [];
   listaUsuarios:any = [];
   listaTodosLosusuarios:any = [];
   formGroupUsuario:any;
@@ -65,6 +67,7 @@ export class AdminUsuariosComponent implements OnInit {
     
     this.sidebarService.rutaActual = '/admin/admin-usuarios';
     this.obtenerUsuarios();
+    this.obtenerProgramas();
     
     this.formGroupUsuario = this.formBuilder.group({
   
@@ -320,5 +323,35 @@ export class AdminUsuariosComponent implements OnInit {
     }
 
   }
+
+  obtenerProgramas():void{
+
+    
+
+    this.servicioBackend.getRequest('programa-academicos').subscribe({
+
+        next :(datos) => {
+          this.listaProgramas= datos;
+          this.listaTodosProgramas = datos;
+
+        },
+        error : (e:any) => {
+          console.log(e);
+
+          
+        },
+        
+        complete : ()=>{
+
+        
+        }
+        
+
+      
+      
+    })
+
+  }
+
 
 }
