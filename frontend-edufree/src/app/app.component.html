@@ -31,15 +31,15 @@
     <hr>
 
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item cls-item mb-2" routerLink="/admin-usuarios">
-        <a class="nav-link text-white" aria-current="page">
+      <li class="nav-item cls-item mb-2" routerLink="admin/admin-usuarios">
+        <a class="nav-link text-white" [ngClass]="{'active' : sidebarService.rutaActual == '/admin/admin-usuarios'}" aria-current="page">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Gestión Usuarios
         </a>
       </li>
 
       <li routerLink="/programas-en-oferta" class="cls-item">
-        <a class="nav-link text-white mb-2">
+        <a class="nav-link text-white mb-2" [ngClass]="{'active' : sidebarService.rutaActual == 'programas-en-oferta'}">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Programas en Oferta
         </a>
@@ -52,7 +52,7 @@
         </a>
       </li>
 
-      <li routerLink="/admin-grupos" class="cls-item">
+      <li routerLink="/admin/admin-grupos" class="cls-item">
         <a class="nav-link text-white mb-2">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Gestion Grupos
@@ -63,6 +63,12 @@
         <a class="nav-link text-white mb-2">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Grupos Asignados
+        </a>
+      </li>
+      <li routerLink="/usuarios-por-grupo" class="cls-item">
+        <a class="nav-link text-white mb-2">
+          <svg class="bi me-2" width="16" height="16"><use /></svg>
+          Usuarios por Grupo
         </a>
       </li>
 

@@ -1,5 +1,6 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {Perfil} from './perfil.model';
+import {Grupo} from './grupo.model';
 
 @model()
 export class Usuario extends Entity {
@@ -82,6 +83,9 @@ export class Usuario extends Entity {
 
   @belongsTo(() => Perfil)
   perfilId: string;
+
+  @belongsTo(() => Grupo)
+  grupoId: string;
 
   constructor(data?: Partial<Usuario>) {
     super(data);

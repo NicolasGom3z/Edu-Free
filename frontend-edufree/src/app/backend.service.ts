@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,11 +15,11 @@ export class BackendService {
 
   constructor(private http:HttpClient) { 
 
-    this.ValidarAutenticacion();
+    this.validarAutenticacion();
 
   }
 
-  ValidarAutenticacion(): void {
+  validarAutenticacion(): void {
 
     const token =  localStorage.getItem('tokenedu');
 
@@ -38,11 +38,18 @@ export class BackendService {
           );
   }
 
-  getRequest2(nombreControlador:string,id:string):Observable<any>{
+  getRequestfilter(nombreControlador:string,filtro:string):Observable<any>{
 
-    return this.http.get(this.rutaRaiz + '/' +nombreControlador + '/' + id + 'grupos',
-          { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`})}
-          
+    const parametros = new HttpParams().append('filter',filtro);
+
+    return this.http.get(this.rutaRaiz + '/' +nombreControlador,
+          { 
+            headers: new HttpHeaders({ 
+              'Authorization': `Bearer ${this.token}`
+            }),
+            params : parametros
+          }
+            
           );
   }
 
@@ -104,6 +111,7 @@ export class BackendService {
                                 'Authorization': `Bearer ${this.token}`})})
   
   }
+  
   deleteRequest2(nombreControlador:string, id: string){
   
   

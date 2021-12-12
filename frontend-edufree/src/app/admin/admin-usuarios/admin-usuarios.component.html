@@ -4,16 +4,18 @@
   <div class="my-4">
 
     <div class="d-flex">
-      <label for="" class="mx-2">Seleccione tipo de usuario:</label>
-      <select   [(ngModel)] = "tipo"
-                name="" id="" class="mx-2">
-        <option [value]="option.codigo" *ngFor="let option of tiposUsuario">
+      <label for="tipoU" class="mx-2">Seleccione tipo de usuario:</label>
+      <select   [(ngModel)] = "tipoFiltro" (change)="filtroUsuarioPorTipo()"
+                name="" id="tipoU" class="mx-2">
+        <option [value]="option.codigo" *ngFor="let option of tiposUsuarioFiltro">
           {{option.texto}}
         </option>
       </select>
-      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
+      <!-- <button (click)="filtroUsuarioPorTipo()"
+              type="button" class="ms-2 btn btn-success mx-2">Filtrar</button> -->
       <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
               data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
+  
     </div>
 
   </div>
@@ -26,7 +28,7 @@
         <td>Apellidos</td>
         <td>Edad</td>
         <td>Telefono</td>
-        <td>Dirección</td>
+        <td>Tipo</td>
         <td>Sexo</td>
         <td>Email</td>
         <td>Editar</td>
@@ -40,7 +42,7 @@
           <td>{{usuario.apellidos}}</td>
           <td>{{usuario.edad}}</td>
           <td>{{usuario.telefono}}</td>
-          <td>{{usuario.direccion}}</td>
+          <td>{{usuario.perfilAsignado}}</td>
           <td>{{usuario.sexo}}</td>
           <td>{{usuario.email}}</td>
           <td>
@@ -74,7 +76,17 @@
       <div class="modal-body">
         <form [formGroup]="formGroupUsuario">
 
+          <div class="mb-3">
+            <label class="form-label" >Perfil Asignado</label>
+            <select  formControlName = "perfilId"
+                class="mx-2">
+              <option  *ngFor="let option of tiposUsuario"[value]="option.codigo">
+                {{option.texto}}
+                </option>
+          </select>
 
+          </div>
+          
           <div class="mb-3">
             <label class="form-label">Codigo</label>
             <input formControlName = "codigo"
@@ -141,11 +153,11 @@
             type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese Programa Academico">
           </div>
 
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label class="form-label">Perfil Id</label>
             <input formControlName = "perfilId"
             type="text" class="form-control" id="perfilIdInput" placeholder="Ingrese perfil Id">
-          </div>
+          </div> -->
 
           
   
@@ -167,6 +179,9 @@
 <ng-template #templateNoAutorized>
 
   <h1>No estas autorizado</h1>
+  <button   routerLink="/login"
+            type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            >Volver</button>
 
 </ng-template>
 

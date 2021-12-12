@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
       password: ['',Validators.required]
     });
 
+    
+
   }
 
   ngOnInit(): void {
@@ -50,13 +52,13 @@ export class LoginComponent implements OnInit {
       {
         
         next :(datos : any) => {
-
+          
           const token = datos['tk'];
           localStorage.setItem('tokenedu',token);
           this.servicioBackend.isAuthenticate = true;
           this.servicioBackend.token = token;
           
-          this.router.navigate(['/admin-usuarios']);
+          this.router.navigate(['admin/admin-usuarios']);
 
           Swal.fire(
             'Bienvenido!',
@@ -85,5 +87,6 @@ export class LoginComponent implements OnInit {
     )
 
   }
+
 
 }

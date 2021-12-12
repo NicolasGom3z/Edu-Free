@@ -42,6 +42,7 @@ export class ProgramaAcademico extends Entity {
 
   @hasMany(() => Asignatura)
   asignaturas: Asignatura[];
+  
 
   constructor(data?: Partial<ProgramaAcademico>) {
     super(data);

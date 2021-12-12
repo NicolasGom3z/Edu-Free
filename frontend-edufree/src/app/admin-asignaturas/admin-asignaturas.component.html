@@ -19,7 +19,7 @@
         <th>Nombre</th>
         <td>Descripcion</td>
         <td>Creditos</td>
-        <td>Programa</td>
+        <td>Programa Academico</td>
         <td>Editar</td>
         <td>Borrar</td>
       </thead>
@@ -83,9 +83,12 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">AsignaturaId</label>
-            <input formControlName = "programaAcademicoId"
-                    type="text" class="form-control" id="programaAcademicoIdInput" placeholder="Ingrese programa academico Id">
+            <label class="form-label">Programa</label>
+            <select name="" id="" formControlName = "programaAcademicoId">
+              <option *ngFor="let programa of listaProgramas" 
+                      value="{{programa['id']}}">{{programa['id']}}</option>
+            </select>
+  
           </div>
 
           

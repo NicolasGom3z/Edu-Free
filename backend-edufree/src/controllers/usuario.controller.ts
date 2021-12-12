@@ -26,7 +26,7 @@ import {UsuarioRepository} from '../repositories';
 import { SeguridadService } from '../services/seguridad.service';
 
 
-  @authenticate('seguridad') 
+@authenticate('seguridad') 
 
 export class UsuarioController {
   constructor(

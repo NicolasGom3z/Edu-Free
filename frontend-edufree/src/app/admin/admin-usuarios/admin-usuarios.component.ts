@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend.service';
+import { BackendService } from '../../backend.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SidebarService } from '../../sidebar.service';
 
 
 
@@ -12,36 +13,59 @@ import Swal from 'sweetalert2';
 })
 export class AdminUsuariosComponent implements OnInit {
 
-  
-
-  tiposUsuario = [
+  tiposUsuarioFiltro = [
     {
-      codigo:'estudiante',
+      codigo:'Todos',
+      texto :'Todos'
+    },
+    {
+      codigo:'Estudiante',
       texto :'Estudiante'
     },
     {
-      codigo:'docente',
+      codigo:'Docente',
       texto :'Docente'
     },
     {
-      codigo:'administrador',
+      codigo:'Administrador',
+      texto :'Administrador'
+    }
+  ]
+
+
+  tiposUsuario = [
+  
+    {
+      codigo:'618f2842b975f117ac3e6be0',
+      texto :'Estudiante'
+    },
+    {
+      codigo:'618fdf9b5b5b3f2b0474fff5',
+      texto :'Docente'
+    },
+    {
+      codigo:'618fe8525b5b3f2b0474fff7',
       texto :'Administrador'
     }
   ]
 
   listaUsuarios:any = [];
+  listaTodosLosusuarios:any = [];
   formGroupUsuario:any;
-  tipo:any = '';
+  tipoUsuario:any = '';
+  tipoFiltro:any = '';
   modoEdicion = false;
   id = '';
 
 
   constructor(public servicioBackend : BackendService,
-              private formBuilder:FormBuilder
+              private formBuilder:FormBuilder,
+              private sidebarService:SidebarService
     ) { 
-
+    
+    this.sidebarService.rutaActual = '/admin/admin-usuarios';
     this.obtenerUsuarios();
-
+    
     this.formGroupUsuario = this.formBuilder.group({
   
       codigo: ['',Validators.required],
@@ -60,6 +84,7 @@ export class AdminUsuariosComponent implements OnInit {
 
     });
 
+    
 
   }
 
@@ -68,18 +93,19 @@ export class AdminUsuariosComponent implements OnInit {
 
   crearUsuario(){
 
-    if (!this.tipo) {
-      Swal.fire(
-        'Alerta!',
-        'Selecciona un tipo de Usuario',
-        'warning'
-      );
-      return;
-    }
-    
     const usuario = this.formGroupUsuario.getRawValue();
-    usuario["perfilAsignado"] = this.tipo;
-  
+    usuario["perfilAsignado"] = this.obtenerTipo(usuario['perfilId']);
+    
+    
+    // if (usuario["perfilAsignado"]) {
+    //   Swal.fire(
+    //     'Alerta!',
+    //     'Selecciona un tipo de Usuario',
+    //     'warning'
+    //   );
+    //   return;
+    // }
+    
 
     this.servicioBackend.postRequest('usuarios',JSON.stringify(usuario)).subscribe(
 
@@ -87,7 +113,7 @@ export class AdminUsuariosComponent implements OnInit {
         
         next :(nuevoUsuario) => {
           this.listaUsuarios.push(nuevoUsuario);
-          
+          this.formGroupUsuario.reset();
           Swal.fire(
             'Todo bien!',
             'Usuario agregado',
@@ -134,11 +160,11 @@ export class AdminUsuariosComponent implements OnInit {
 
         next :(datos) => {
           this.listaUsuarios= datos;
-        
+          this.listaTodosLosusuarios = datos;
         },
         error : (e:any) => {
           console.log(e);
-
+          this.servicioBackend.autorized = false;
           
         },
         
@@ -164,8 +190,8 @@ export class AdminUsuariosComponent implements OnInit {
   editarUsuario():void{
 
     const usuario = this.formGroupUsuario.getRawValue();
-    usuario["perfilAsignado"] = this.tipo;
-  
+    // usuario["perfilId"] = this.tipoUsuario;
+    usuario["perfilAsignado"] = this.obtenerTipo(usuario['perfilId']);
 
     this.servicioBackend.patchRequest('usuarios', this.id,JSON.stringify(usuario)).subscribe(
 
@@ -185,7 +211,7 @@ export class AdminUsuariosComponent implements OnInit {
 
           if(e.statusCode == 401){
 
-            this.servicioBackend.autorized = true;
+            this.servicioBackend.autorized = false;
             Swal.fire(
               'Error',
               'Usuario no autorizado',
@@ -259,6 +285,39 @@ export class AdminUsuariosComponent implements OnInit {
       }
       
     );
+
+  }
+
+  filtroUsuarioPorTipo():void{
+
+    if (this.tipoFiltro == 'Todos') {
+      this.listaUsuarios = this.listaTodosLosusuarios;
+    }else{
+
+      const datosFiltrados = this.listaTodosLosusuarios.filter(
+        (usuario:any) =>
+  
+        usuario.perfilAsignado == this.tipoFiltro);
+  
+      this.listaUsuarios = datosFiltrados;
+    }
+
+    
+
+  }
+
+
+  obtenerTipo(id:string):any{
+
+    for (let tipo of this.tiposUsuario) {
+      
+      if (tipo['codigo'] == id) {
+        
+        return tipo['texto'];
+
+      }
+    
+    }
 
   }
 

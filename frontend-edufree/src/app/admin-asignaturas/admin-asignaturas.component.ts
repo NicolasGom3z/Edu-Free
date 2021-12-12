@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class AdminAsignaturasComponent implements OnInit {
 
-  
+  listaProgramas:any = [];
   listaAsignaturas:any = [];
   formGroupAsignatura:any;
   modoEdicion = false;
@@ -20,6 +20,7 @@ export class AdminAsignaturasComponent implements OnInit {
               private formBuilder:FormBuilder
   ){ 
 
+    this.obtenerProgramas();
     this.obtenerAsignaturas();
     this.formGroupAsignatura = this.formBuilder.group({
   
@@ -29,6 +30,8 @@ export class AdminAsignaturasComponent implements OnInit {
       programaAcademicoId : ['',Validators.required],
 
     });
+
+    
 
   }
 
@@ -41,7 +44,8 @@ export class AdminAsignaturasComponent implements OnInit {
 
         next :(datos) => {
           this.listaAsignaturas= datos;
-        
+          
+
         },
         error : (e:any) => {
           console.log(e);
@@ -59,6 +63,49 @@ export class AdminAsignaturasComponent implements OnInit {
       
     })
 
+  }
+
+  obtenerProgramas(){
+
+    this.servicioBackend.getRequest('programa-academicos').subscribe(
+      {
+        next :(datos) => {
+          this.listaProgramas=datos;
+          // console.log(this.listaProgramas);
+        
+          
+
+        },
+        error : (e:any) => {
+          console.log(e);
+        },
+        
+        complete : ()=>{
+
+        
+        }
+        
+
+      }
+    )
+
+  }
+
+  mostrarNombrePrograma(id:string):any{
+    let nombre = '';
+    for (let index = 0; index < this.listaProgramas.length; index++) {
+      const element = this.listaProgramas[index];
+      console.log(element['id']);
+      if (id == element['id']) {
+        nombre = element['nombre']
+        return nombre;
+      }else{
+        return false;
+      }
+
+      
+    }
+    
   }
 
   crearAsignatura(){

@@ -7,10 +7,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProgramasEnOfertaComponent } from './programas-en-oferta/programas-en-oferta.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component';
-import { AdminGruposComponent } from './admin-grupos/admin-grupos.component';
+import { AdminUsuariosComponent } from './admin/admin-usuarios/admin-usuarios.component';
+import { AdminGruposComponent } from './admin/admin-grupos/admin-grupos.component';
 import { AdminAsignaturasComponent } from './admin-asignaturas/admin-asignaturas.component';
-import { AsignacionGruposComponent } from './asignacion-grupos/asignacion-grupos.component'
+import { AsignacionGruposComponent } from './asignacion-grupos/asignacion-grupos.component';
+import { UsuarioPorGrupoComponent } from './usuario-por-grupo/usuario-por-grupo.component'
 
 @NgModule({
   declarations: [
@@ -20,14 +21,15 @@ import { AsignacionGruposComponent } from './asignacion-grupos/asignacion-grupos
     AdminUsuariosComponent,
     AdminGruposComponent,
     AdminAsignaturasComponent,
-    AsignacionGruposComponent
+    AsignacionGruposComponent,
+    UsuarioPorGrupoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

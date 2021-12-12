@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BackendService } from '../backend.service';
+import { BackendService } from '../../backend.service';
 import Swal from 'sweetalert2';
+import { SidebarService } from 'src/app/sidebar.service';
 
 @Component({
   selector: 'app-admin-grupos',
@@ -12,12 +13,19 @@ export class AdminGruposComponent implements OnInit {
 
   listaGrupos:any = [];
   listaAsignaturasGrupo:any = [];
+  listaUsuarios :any =[];
+  grupoActual ='';
+  listaUsuariosGrupo :any =[];
+  listaTodosLosUsuarios :any =[];
+  listaTodosLosGrupos:any =[];
+
   formGroupGrupo:any;
   formGroupAsignaturasGrupo:any;
   modoEdicion = false;
   id = '';
 
   constructor(public servicioBackend : BackendService,
+              private servicioSideBar:SidebarService,
               private formBuilder:FormBuilder
   ) { 
   
@@ -30,11 +38,15 @@ export class AdminGruposComponent implements OnInit {
       asignaturaId : ['',Validators.required],
 
     });
-    this.formGroupAsignaturasGrupo= this.formBuilder.group({
-  
-      asignaturaId : ['',Validators.required]
 
-    });
+    this.servicioSideBar.rutaActual = 'grupo';
+    this.obtenerGrupos();
+
+    // this.formGroupAsignaturasGrupo= this.formBuilder.group({
+  
+    //   asignaturaId : ['',Validators.required]
+
+    // });
 
 
 
@@ -48,11 +60,14 @@ export class AdminGruposComponent implements OnInit {
 
   obtenerGrupos():void{
 
-    this.servicioBackend.getRequest('grupos').subscribe({
+    const filtro = {"include":[{"relation":"usuarios"}]};
+
+    this.servicioBackend.getRequestfilter('grupos',JSON.stringify(filtro)).subscribe({
 
         next :(datos) => {
           this.listaGrupos= datos;
-        
+          this.listaTodosLosGrupos = datos;
+
         },
         error : (e:any) => {
           console.log(e);
@@ -280,5 +295,15 @@ export class AdminGruposComponent implements OnInit {
     );
   }
 
+
+  verUsuarios(grupo:any){
+
+    this.grupoActual = grupo;
+    this.listaUsuariosGrupo = grupo.usuarios;
+
+
+
+
+  }
 
 }
