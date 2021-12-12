@@ -1,13 +1,14 @@
 
 <div *ngIf="servicioBackend.autorized; else templateNoAutorized">
 
-  <div class="my-4">
+  <div class="my-4 w-100">
 
-    <div class="d-flex">
+    <div class="d-flex ">
     
+      <h2>Administrador de asignaturas</h2>
       
       <!-- <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button> -->
-      <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
+      <button type="button" class="btn btn-warning mx-5  " (click)="modoEdicion = false"
               data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
     </div>
 
@@ -24,13 +25,13 @@
         <td>Borrar</td>
       </thead>
 
-      
+
       <tbody>
         <tr *ngFor="let asignatura of listaAsignaturas">
           <th>{{asignatura.nombre}}</th>
           <td>{{asignatura.descripcion}}</td>
           <td>{{asignatura.creditos}}</td>
-          <td>{{verPrograma(asignatura.programaAcademicoId)}}</td>
+          <td>{{verProgramName(asignatura.programaAcademicoId)}}</td>
           
   
           <td>
@@ -87,7 +88,7 @@
             <label class="form-label">Programa</label>
             <select name="" id="" formControlName = "programaAcademicoId">
               <option *ngFor="let programa of listaProgramas" 
-                      value="{{programa['id']}}">{{programa['id']}}</option>
+                      value="{{programa['id']}}">{{verProgramName(programa['id'])}}</option>
             </select>
   
           </div>

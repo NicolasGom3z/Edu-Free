@@ -91,19 +91,14 @@ export class AdminAsignaturasComponent implements OnInit {
 
   }
 
-  mostrarNombrePrograma(id:string):any{
-    let nombre = '';
-    for (let index = 0; index < this.listaProgramas.length; index++) {
-      const element = this.listaProgramas[index];
-      console.log(element['id']);
-      if (id == element['id']) {
-        nombre = element['nombre']
-        return nombre;
-      }else{
-        return false;
-      }
+  verProgramName(id:string):any{
+    
+    for (let programa of this.listaProgramas) {
+      if(programa['id'] == id){
 
-      
+        return programa['nombre'];
+
+      }
     }
     
   }
