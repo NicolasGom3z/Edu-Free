@@ -20,7 +20,7 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import { Credenciales } from '../models';
-import { SeguridadService } from '../services/seguridad.service';
+import { SeguridadService } from '../services';
 
 export class LoginController {
   constructor(

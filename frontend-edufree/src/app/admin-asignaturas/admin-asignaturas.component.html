@@ -8,7 +8,7 @@
       <h2>Administrador de asignaturas</h2>
       
       <!-- <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button> -->
-      <button type="button" class="btn btn-warning mx-5  " (click)="modoEdicion = false"
+      <button *ngIf="servicioBackend.adminProfile"  type="button" class="btn btn-warning mx-5  " (click)="modoEdicion = false"
               data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
     </div>
 
@@ -21,8 +21,8 @@
         <td>Descripcion</td>
         <td>Creditos</td>
         <td>Programa Academico</td>
-        <td>Editar</td>
-        <td>Borrar</td>
+        <td *ngIf="servicioBackend.adminProfile" >Editar</td>
+        <td *ngIf="servicioBackend.adminProfile" >Borrar</td>
       </thead>
 
 
@@ -34,12 +34,12 @@
           <td>{{verProgramName(asignatura.programaAcademicoId)}}</td>
           
   
-          <td>
+          <td *ngIf="servicioBackend.adminProfile" >
             <button type="button" class="btn btn-primary" (click)="entrarModoEdicion(asignatura)"
                     data-bs-toggle="modal" data-bs-target="#addModal"        
                     >Editar</button>
           </td>
-          <td>
+          <td *ngIf="servicioBackend.adminProfile" >
 
             <button   (click)="eliminarAsignatura(asignatura.id)"
                       type="button" class="btn btn-danger">Borrar</button>

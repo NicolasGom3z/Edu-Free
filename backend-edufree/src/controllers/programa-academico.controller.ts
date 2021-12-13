@@ -21,7 +21,7 @@ import {
 import {ProgramaAcademico} from '../models';
 import {ProgramaAcademicoRepository} from '../repositories';
 
-// @authenticate('seguridad') 
+@authenticate('seguridad') 
 
 export class ProgramaAcademicoController {
   constructor(

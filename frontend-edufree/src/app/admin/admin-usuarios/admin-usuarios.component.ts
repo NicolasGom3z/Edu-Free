@@ -3,6 +3,7 @@ import { BackendService } from '../../backend.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SidebarService } from '../../sidebar.service';
+import { Md5 } from 'ts-md5';
 
 
 
@@ -97,6 +98,7 @@ export class AdminUsuariosComponent implements OnInit {
   crearUsuario(){
 
     const usuario = this.formGroupUsuario.getRawValue();
+    usuario['password'] = Md5.hashStr(usuario['password']);
     usuario["perfilAsignado"] = this.obtenerTipo(usuario['perfilId']);
 
     this.servicioBackend.postRequest('usuarios',JSON.stringify(usuario)).subscribe(
@@ -184,6 +186,8 @@ export class AdminUsuariosComponent implements OnInit {
     const usuario = this.formGroupUsuario.getRawValue();
     // usuario["perfilId"] = this.tipoUsuario;
     usuario["perfilAsignado"] = this.obtenerTipo(usuario['perfilId']);
+    usuario['password'] = Md5.hashStr(usuario['password']);
+
 
     this.servicioBackend.patchRequest('usuarios', this.id,JSON.stringify(usuario)).subscribe(
 

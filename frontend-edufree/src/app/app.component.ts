@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SidebarService } from './sidebar.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-root',
@@ -70,6 +71,7 @@ export class AppComponent {
     const usuario = this.formGroupUsuario.getRawValue();
     usuario["perfilAsignado"] = 'Estudiante';
     usuario["perfilId"] = '618f2842b975f117ac3e6be0';
+    usuario['password'] = Md5.hashStr(usuario['password']);
     
     
     // if (usuario["perfilAsignado"]) {

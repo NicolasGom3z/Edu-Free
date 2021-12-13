@@ -6,10 +6,10 @@
     <div class="d-flex">
     
       
-      <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
+      <button *ngIf="servicioBackend.adminProfile"  type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
               data-bs-toggle="modal" data-bs-target="#addModal">Agregar Grupo</button>
 
-      <button type="button" class="btn btn-primary mx-2"
+      <button   type="button" class="btn btn-primary mx-2"
               data-bs-toggle="modal" data-bs-target="#asignarModal">Crear Relacion</button>
         
     </div>
@@ -40,12 +40,12 @@
                     >Asignar</button> -->
           </td>
 
-          <td>
+          <td *ngIf="servicioBackend.adminProfile" >
             <button type="button" class="btn btn-primary" (click)="entrarModoEdicion(grupo)"
                     data-bs-toggle="modal" data-bs-target="#addModal"        
                     >Editar</button>
           </td>
-          <td>
+          <td *ngIf="servicioBackend.adminProfile" >
 
             <button   (click)="eliminarGrupo(grupo.id)"
                       type="button" class="btn btn-danger">Borrar</button>

@@ -27,7 +27,6 @@ import { SeguridadService } from '../services/seguridad.service';
 
 
 // @authenticate('seguridad') 
-
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)

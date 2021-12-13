@@ -1,6 +1,6 @@
 <div class="d-flex mb-5">
   <h2 >Programas en oferta</h2>
-    <button  (click)="editMode=false"
+    <button *ngIf="servicioBackend.adminProfile"   (click)="editMode=false"
       type="button" class="btn btn-primary mx-5"
       data-bs-toggle="modal" data-bs-target="#addProgram"
       >Agregar Programa + </button>
@@ -30,7 +30,7 @@
       >Ver grupos </button> -->
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer" *ngIf="servicioBackend.adminProfile" >
       <button  (click)="modoEdicion(item)"
       type="button" class="btn btn-warning"
       data-bs-toggle="modal" data-bs-target="#addProgram"

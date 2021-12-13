@@ -11,6 +11,7 @@ interface Usuario {
 }
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +19,8 @@ interface Usuario {
 })
 export class LoginComponent implements OnInit {
 
-
+  currentProfile = '';
+  listaUsuarios:any = [];
   formLogin:any;
 
   constructor(
@@ -42,8 +44,16 @@ export class LoginComponent implements OnInit {
 
   login():void{
 
+    let cadena:string = this.formLogin.controls.codigo.value;
+    let posicion = cadena.indexOf('admin');
+    if (posicion != -1) {
+      this.servicioBackend.adminProfile = true;
+    }else{
+      this.servicioBackend.adminProfile = false;
+
+    }
+    console.log( this.servicioBackend.adminProfile );
     const encryptedPassword = Md5.hashStr(this.formLogin.controls.password.value);
-    
     const credenciales = this.formLogin.getRawValue();
     credenciales.password = encryptedPassword;
 
@@ -57,8 +67,14 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('tokenedu',token);
           this.servicioBackend.isAuthenticate = true;
           this.servicioBackend.token = token;
-          
-          this.router.navigate(['admin/admin-usuarios']);
+
+          if (this.servicioBackend.adminProfile) {
+            this.router.navigate(['admin/admin-usuarios']);
+          }else{
+            this.router.navigate(['programas-en-oferta']);
+          }
+        
+
 
           Swal.fire(
             'Bienvenido!',
@@ -88,5 +104,5 @@ export class LoginComponent implements OnInit {
 
   }
 
-
+  
 }

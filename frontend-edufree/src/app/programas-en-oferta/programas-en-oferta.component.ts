@@ -31,7 +31,7 @@ export class ProgramasEnOfertaComponent implements OnInit {
   constructor(
     private sidebarService:SidebarService,
     private formBuilder:FormBuilder,
-    private servicioBackend:BackendService) {
+    public servicioBackend:BackendService) {
 
     this.sidebarService.rutaActual = 'programas-en-oferta';
     

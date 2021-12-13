@@ -10,6 +10,7 @@ export class BackendService {
   rutaRaiz = 'http://localhost:3000';
   token:string = ''
   isAuthenticate:boolean = false;
+  adminProfile = false;
   autorized : boolean = true;
 
 

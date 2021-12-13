@@ -36,7 +36,7 @@
     <hr>
 
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item cls-item mb-2" routerLink="admin/admin-usuarios">
+      <li *ngIf="servicioBackend.adminProfile" class="nav-item cls-item mb-2" routerLink="admin/admin-usuarios">
         <a class="nav-link text-white" [ngClass]="{'active' : sidebarService.rutaActual == '/admin/admin-usuarios'}" aria-current="page">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Gestión Usuarios
