@@ -1,19 +1,45 @@
+<div class="d-flex mb-5">
+  <h2 >Programas en oferta</h2>
+    <button  (click)="editMode=false"
+      type="button" class="btn btn-primary mx-5"
+      data-bs-toggle="modal" data-bs-target="#addProgram"
+      >Agregar Programa + </button>
+
+</div>
 
 <div class="d-flex flex-wrap">
-
   <div *ngFor="let item of listaProgramas" class="card m-3" style="width: 18rem;">
     <!-- <img src="..." class="card-img-top" alt="..."> -->
     <div class="card-body">
-      <h5 class="card-title">{{item.nombre}}</h5>
+
+      <div class="d-flex">
+        <h5 class="card-title flex-grow-1">{{item.nombre}}</h5>
+
+      </div>
+
+      
       <p class="card-text">Modalidad: {{item.modalidad}}</p>
       <p class="card-text">Tipo de programa: {{item.tipo}}</p>
       <p class="card-text">Creditos Totales: {{item.creditosTotales}}</p>
-    
+      <p>Fecha Creacion:</p>
+      <p class="card-text">{{item.fechaCreacion}}</p>
+      
       <!-- <button  
       type="button" class="btn btn-primary"
       data-bs-toggle="modal" data-bs-target="#grupos"
       >Ver grupos </button> -->
     </div>
+
+    <div class="card-footer">
+      <button  (click)="modoEdicion(item)"
+      type="button" class="btn btn-warning"
+      data-bs-toggle="modal" data-bs-target="#addProgram"
+      >Editar</button>
+      <button  (click)="eliminarPrograma(item.id)"
+      type="button" class="btn btn-danger mx-2"
+      >Borrar</button>
+    </div>
+
   </div>
 
   
@@ -56,4 +82,70 @@
   </div>
 </div>
 
+<!-- modal agregar programa -->
+<div class="modal fade" id="addProgram" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Estudiantes por Grupo</h5>
+      </div>
+      <div class="modal-body">
 
+        <form [formGroup]="formGroupProgramas">
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre"
+                    type="text" class="form-control" id="codigoInput" placeholder="Ingrese nombre programa">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tipo de programa</label>
+            <select  formControlName = "tipo" 
+                class="mx-2">
+              <option  *ngFor="let tipo of tipoProgramas"[value]="tipo">
+                {{tipo}}
+                </option>
+          </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label " >Creditos Totales</label>
+            <input formControlName = "creditosTotales"
+                    type="text" class="form-control w-25" id="codigoInput" placeholder="Ingrese total creditos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Modalidad</label>
+            <select  formControlName = "modalidad" 
+                      class="mx-2">
+              <option  *ngFor="let modalidad of modalidades"[value]="modalidad">
+                {{modalidad}}
+              </option>
+            </select>
+          </div>
+
+
+        </form>
+    
+
+      </div>
+      <div class="modal-footer"  *ngIf="!editMode; else botonEdit">
+        <button (click)="editMode = false" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click) = "crearPrograma()" 
+                  type="button" class="btn btn-success">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #botonEdit>
+  <div class="modal-footer">
+    <button   (click)="editMode = false"
+              type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button   (click) = "editarPrograma()"
+              type="button" class="btn btn-warning">Save changes</button>
+  </div>
+</ng-template>

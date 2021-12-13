@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import Swal from 'sweetalert2';
+import { SidebarService } from '../sidebar.service';
 
 @Component({
   selector: 'app-admin-asignaturas',
@@ -17,9 +18,10 @@ export class AdminAsignaturasComponent implements OnInit {
   id = '';
 
   constructor(public servicioBackend : BackendService,
-              private formBuilder:FormBuilder
+              private formBuilder:FormBuilder,
+              private sidebarService:SidebarService
   ){ 
-
+    this.sidebarService.rutaActual = 'admin-asignaturas';
     this.obtenerProgramas();
     this.obtenerAsignaturas();
     this.formGroupAsignatura = this.formBuilder.group({
@@ -113,7 +115,7 @@ export class AdminAsignaturasComponent implements OnInit {
         
         next :(nuevaAsignatura) => {
           this.listaAsignaturas.push(nuevaAsignatura);
-          
+          this.formGroupAsignatura.reset();
           Swal.fire(
             'Todo bien!',
             'Asignatura agregada',
@@ -175,6 +177,7 @@ export class AdminAsignaturasComponent implements OnInit {
             'success'
           )
           this.obtenerAsignaturas();
+          this.formGroupAsignatura.reset();
         },
         error : (e:any) => {
           console.log(e);
@@ -209,6 +212,10 @@ export class AdminAsignaturasComponent implements OnInit {
 
   }
 
+  close(){
+    console.log('close');
+    this.formGroupAsignatura.reset();
+  }
 
   eliminarAsignatura(id:string):void{
 

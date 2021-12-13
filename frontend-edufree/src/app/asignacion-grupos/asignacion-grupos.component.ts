@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import Swal from 'sweetalert2';
+import { SidebarService } from '../sidebar.service';
 
 @Component({
   selector: 'app-asignacion-grupos',
@@ -12,6 +13,7 @@ export class AsignacionGruposComponent implements OnInit {
 
   listaAsignaturas :any = [];
   listaAsignaciones :any = [];
+  listaProgramas:any = [];
   listaAsignaturasGrupo:any = [];
   formGroupAsignaturasGrupo:any;
   modoEdicion = false;
@@ -19,11 +21,13 @@ export class AsignacionGruposComponent implements OnInit {
 
 
   constructor(public servicioBackend : BackendService,
-              private formBuilder:FormBuilder) { 
+              private sideBarService:SidebarService) { 
+              
+  this.sideBarService.rutaActual = 'grupos-asignados';
 
-              this.obtenerAsignaturas();
+  this.obtenerAsignaturas();
 
-              }
+  }
 
   ngOnInit(): void {
   }
@@ -81,161 +85,33 @@ export class AsignacionGruposComponent implements OnInit {
 
   }
 
-  crearAsignacion(id:string){
     
-    const asignatura = this.formGroupAsignaturasGrupo.getRawValue();
+  obtenerProgramas():void{
 
-    this.servicioBackend.postRequest(`asignaturas/${id}/grupos`,JSON.stringify(asignatura)).subscribe(
+    this.servicioBackend.getRequest('programa-academicos').subscribe({
 
-      {
-        
-        next :(nuevaAsignacion) => {
-          this.listaAsignaturasGrupo.push(nuevaAsignacion);
-          
-          Swal.fire(
-            'Todo bien!',
-            'Asignatura agregada',
-            'success'
-          )
-        },
-        error : (e:any) => {
-          console.log(e);
-
-          if(e.statusCode == 401){
-
-            this.servicioBackend.autorized = true;
-            Swal.fire(
-              'Error',
-              'Usuario no autorizado',
-              'error'
-            )
-
-
-          }else{
-            Swal.fire(
-              'Upss!',
-              'Asignatura no agregada',
-              'error'
-            )
-          }
-
-        },
-        
-        complete : ()=>{
-
-        
-        }
-      }
-      
-    );
-  }
-
-  entrarModoEdicion(asignacion:any):void{
-
-    this.formGroupAsignaturasGrupo.patchValue(asignacion);
-    this.id = asignacion.id;
-    this.modoEdicion = true;
-  }
-
-  editarAsignacion(id:string):void{
-
-    const asignatura = this.formGroupAsignaturasGrupo.getRawValue();
-    
-    this.servicioBackend.patchRequest(`asignaturas/${id}/grupos`, this.id,JSON.stringify(asignatura)).subscribe(
-
-      {
-        
         next :(datos) => {
-          
-          Swal.fire(
-            'Todo bien!',
-            'Asignatura Editada',
-            'success'
-          )
-          this.obtenerAsignaciones(id);
+          this.listaProgramas= datos;
+
+
         },
         error : (e:any) => {
           console.log(e);
 
-          if(e.statusCode == 401){
-
-            this.servicioBackend.autorized = true;
-            Swal.fire(
-              'Error',
-              'Usuario no autorizado',
-              'error'
-            )
-
-
-          }else{
-            Swal.fire(
-              'Upss!',
-              'Asignatura no editada',
-              'error'
-            )
-          }
-
+          
         },
         
         complete : ()=>{
 
         
         }
-      }
+        
+
       
-    );
+      
+    })
 
   }
 
-
-  eliminarAsignacion(id:string):void{
-
-
-    this.servicioBackend.deleteRequest2(`asignaturas`, id).subscribe(
-
-      {
-        
-        next :(datos) => {
-          
-          Swal.fire(
-            'Todo bien!',
-            'Grupo Eliminado',
-            'success'
-          )
-          this.obtenerAsignaciones(id);
-        },
-        error : (e:any) => {
-          console.log(e);
-
-          if(e.statusCode == 401){
-
-            this.servicioBackend.autorized = true;
-            Swal.fire(
-              'Error',
-              'Usuario no autorizado',
-              'error'
-            )
-
-
-          }else{
-            Swal.fire(
-              'Upss!',
-              'Asignatura no eliminada',
-              'error'
-            )
-          }
-
-        },
-        
-        complete : ()=>{
-
-        
-        }
-      }
-      
-    );
-
-  }
-
-
+  
 }

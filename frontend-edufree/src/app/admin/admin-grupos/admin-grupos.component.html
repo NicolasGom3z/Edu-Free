@@ -6,9 +6,12 @@
     <div class="d-flex">
     
       
-      <button type="button" class="ms-2 btn btn-success mx-2">Filtrar</button>
       <button type="button" class="btn btn-warning mx-2" (click)="modoEdicion = false"
-              data-bs-toggle="modal" data-bs-target="#addModal">Agregar</button>
+              data-bs-toggle="modal" data-bs-target="#addModal">Agregar Grupo</button>
+
+      <button type="button" class="btn btn-primary mx-2"
+              data-bs-toggle="modal" data-bs-target="#asignarModal">Crear Relacion</button>
+        
     </div>
 
   </div>
@@ -16,14 +19,16 @@
   <div>
     <table class="table table-hover">
       <thead>
-        <td>Nombre</td>
-        
+        <th>Grupo</th>
+        <td>Descripcion</td>
+        <td>Horario</td>
       </thead>
 
       <tbody>
         <tr *ngFor="let grupo of listaGrupos">
           <td>{{grupo.nombre}}</td>
           <td>{{grupo.descripcion}}</td>
+          <td>{{grupo.horario}}</td>
           <td>
             <button type="button" class="btn btn-primary" (click)="verUsuarios(grupo)"
               data-bs-toggle="modal" data-bs-target="#estudiantes"        
@@ -69,6 +74,8 @@
               <td>Apellidos</td>
               <td>Nombre</td>
               <td>Correo</td>
+              <td>Nota</td>
+              
             </thead>
       
             <tbody>
@@ -76,6 +83,8 @@
                 <td>{{usuario.apellidos}}</td>
                 <td>{{usuario.nombre}}</td>
                 <td>{{usuario.email}}</td>
+                <td>{{obtenerNotas(usuario.id)}}</td>
+                
 
             
               </tr>
@@ -86,50 +95,78 @@
       </div>
       <div class="modal-footer" *ngIf="!modoEdicion; else botonEdit">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button   (click)="asignarAsignatura()"
-                  type="button" class="btn btn-primary">Save changes</button>
+      
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- Modal asignar -->
-<!-- <div class="modal fade" id="asignarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+<!-- Modal asignar --> 
+<div class="modal fade" id="asignarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Asignar Usuario a grupo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="formGroupGrupo">
+      
+        <div class="my-4" [formGroup]="formGroupUsuariosGrupo">
 
-
-          <div class="mb-3">
-            <label class="form-label">Asignatura</label>
-
-            <select name="" id="" formControlName="asignaturaId">
-              <option value="618fde815b5b3f2b0474fff3">Trabajo Social</option>
+          <div class="d-flex">
+            <label for="tipoU" class="mx-2">Seleccione <strong>Usuario</strong> a asignar</label>
+            <select  name="" id="usuarioA" class="mx-2 w-25"  formControlName = "usuarioId">
+              <option [value]="usuario.id" *ngFor="let usuario of listaUsuarios">
+                {{usuario.apellidos +' '+ usuario.nombre}}
+              </option>
             </select>
-
-
-            <input formControlName = "asignaturaId"
-                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre del grupo"> 
-          </div>
+            <!-- <button (click)="filtroUsuarioPorTipo()"
+                    type="button" class="ms-2 btn btn-success mx-2">Filtrar</button> -->
           
-  
-        </form>
         
+          </div>
+      
+          <div class="d-flex mt-4">
+            <label for="tipoU" class="mx-2">Seleccione <strong>Grupo</strong></label>
+            <select  name="" id="grupoA" class="mx-2 w-25"  formControlName = "grupoId">
+              <option [value]="grupo['id']" *ngFor="let grupo of listaGrupos">
+                {{grupo['nombre']}}
+              </option>
+            </select>
+            
+          </div>
+          <div class="d-flex mt-4">
+            <label for="tipoU" class="mx-2">Seleccione <strong>Programa Academico</strong></label>
+            <select  name="" id="grupoA" class="mx-2 w-25"  formControlName = "programaAcademico">
+              <option [value]="programa['id']" *ngFor="let programa of listaProgramas">
+                {{programa['nombre']}}
+              </option>
+            </select>
+            
+          </div>
+          <div class="d-flex mt-4 mb-3 w-50">
+            <label class="form-label">Calificacion</label>
+            <input formControlName = "calificaciones"
+                    type="text" class="mx-3 form-control" id="codigoInput" placeholder="Ingrese calificacion">
+          </div>
+      
+        
+        </div>
+      
+
       </div>
       <div class="modal-footer" *ngIf="!modoEdicion; else botonEdit">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button   (click)="asignarAsignatura()"
-                  type="button" class="btn btn-primary">Save changes</button>
+        <button   (click)="crearRelacion()"
+        type="button" class="btn btn-warning mx-2" >Agregar</button>
       </div>
     </div>
   </div>
-</div> -->
+</div> 
 
 <!-- Modal agregar-->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -165,7 +202,9 @@
             <label class="form-label">AsignaturaId</label>
 
             <select name="" id="" formControlName = "asignaturaId">
-              <option value="618f2073b975f117ac3e6bdc">Matematicas</option>
+              <option value="{{asignatura.id}}" *ngFor="let asignatura of listaAsignaturas">
+                {{asignatura.nombre}}
+              </option>
             
             </select>
 

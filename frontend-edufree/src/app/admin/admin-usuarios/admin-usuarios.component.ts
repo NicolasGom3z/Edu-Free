@@ -98,17 +98,6 @@ export class AdminUsuariosComponent implements OnInit {
 
     const usuario = this.formGroupUsuario.getRawValue();
     usuario["perfilAsignado"] = this.obtenerTipo(usuario['perfilId']);
-    
-    
-    // if (usuario["perfilAsignado"]) {
-    //   Swal.fire(
-    //     'Alerta!',
-    //     'Selecciona un tipo de Usuario',
-    //     'warning'
-    //   );
-    //   return;
-    // }
-    
 
     this.servicioBackend.postRequest('usuarios',JSON.stringify(usuario)).subscribe(
 

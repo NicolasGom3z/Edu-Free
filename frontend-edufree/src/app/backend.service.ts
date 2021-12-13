@@ -66,11 +66,11 @@ export class BackendService {
   }
   
 
-  postRequest2(nombreControlador:string,id:string, datos :string){
+  putRequest(nombreControlador:string,id:string,datos:string ){
 
     // const headers = new Headers({'Content-Type':'application/json'});
 
-    return this.http.post(this.rutaRaiz + '/' +nombreControlador + '/' + id + '/grupos', 
+    return this.http.post(this.rutaRaiz + '/' +nombreControlador + '/' + id , 
                           datos, 
                           { headers: new HttpHeaders(
                             { 'Content-Type': 'application/json',

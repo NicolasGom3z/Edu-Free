@@ -13,6 +13,11 @@
     type="button" class="btn btn-light"
     (click) = "cerrarSesion()">Cerrar Sesión</button>
 
+    <button 
+    *ngIf="!servicioBackend.isAuthenticate"
+    type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addModal"
+    (click) = "cerrarSesion()">Crear Cuenta Estudiante</button>
+
   </div>
 
 
@@ -46,31 +51,32 @@
       </li>
 
       <li routerLink="/admin-asignaturas" class="cls-item">
-        <a class="nav-link text-white mb-2">
+        <a class="nav-link text-white mb-2" [ngClass]="{'active' : sidebarService.rutaActual == 'admin-asignaturas'}">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Gestion Asignaturas
         </a>
       </li>
 
       <li routerLink="/admin/admin-grupos" class="cls-item">
-        <a class="nav-link text-white mb-2">
+        <a class="nav-link text-white mb-2"  [ngClass]="{'active' : sidebarService.rutaActual == '/admin/admin-grupos'}">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Gestion Grupos
         </a>
       </li>
 
       <li routerLink="/grupos-asignados" class="cls-item">
-        <a class="nav-link text-white mb-2">
+        <a class="nav-link text-white mb-2"  [ngClass]="{'active' : sidebarService.rutaActual == 'grupos-asignados'}">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Grupos Asignados
         </a>
       </li>
-      <li routerLink="/usuarios-por-grupo" class="cls-item">
+      
+      <!-- <li routerLink="/usuarios-por-grupo" class="cls-item">
         <a class="nav-link text-white mb-2">
           <svg class="bi me-2" width="16" height="16"><use /></svg>
           Usuarios por Grupo
         </a>
-      </li>
+      </li> -->
 
       
       
@@ -104,3 +110,102 @@
 </div>
 
 
+
+
+
+<!-- Modal agregar-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formGroupUsuario">
+
+          
+          <div class="mb-3">
+            <label class="form-label">Codigo</label>
+            <input formControlName = "codigo"
+                    type="text" class="form-control" id="codigoInput" placeholder="Ingrese su ID">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName = "nombre"
+                    type="text" class="form-control" id="nombreInput" placeholder="Ingrese nombre">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input formControlName = "apellidos"
+                    type="text" class="form-control" id="apellidosInput" placeholder="Ingrese apellidos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Edad</label>
+            <input formControlName = "edad"
+                    type="text" class="form-control" id="edadInput" placeholder="Ingrese edad">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Telefono</label>
+            <input formControlName = "telefono"
+                    type="text" class="form-control" id="telefonoInput" placeholder="Ingrese telefono">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input formControlName = "direccion"
+                    type="text" class="form-control" id="direccionInput" placeholder="Ingrese dirección">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sexo</label>
+            <input formControlName = "sexo"
+                    type="text" class="form-control" id="sexoInput" placeholder="Ingrese sexo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input formControlName = "email"
+                    type="email" class="form-control" id="emailInput" placeholder="Ingrese email">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input formControlName = "password"
+                    type="password" class="form-control" id="passwordInput" placeholder="Ingrese contraseña">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Creditos</label>
+            <input formControlName = "creditos"
+                    type="text" class="form-control" id="creditosInput" placeholder="Ingrese numero de creditos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Programa Academico</label>
+            <select  formControlName = "programaAcademicoId" 
+            class="mx-2">
+          <option  *ngFor="let programa of listaProgramas"[value]="programa.id">
+            {{programa.nombre}}
+            </option>
+            </select>
+
+
+
+          </div>
+  
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button   (click) = "crearCuenta()"
+                  type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
