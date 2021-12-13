@@ -1,4 +1,6 @@
-
+.navbar{
+  height: 7vh;
+}
 
 .cls-sidebar{
   height: calc(100vh - 56px);
@@ -20,4 +22,8 @@
 .cls-body{
   width: 100%;
   overflow-y: scroll;
+}
+
+.logo img{
+  max-width: 30px;
 }

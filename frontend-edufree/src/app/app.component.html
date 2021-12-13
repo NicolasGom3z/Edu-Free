@@ -3,8 +3,11 @@
 
 <nav class="navbar navbar-dark bg-dark px-4">
 
-  <h6 class="text-light">EduFree</h6>
-
+  <div class="logo d-flex">
+    <h3 class="ms-5 text-light">EduFree</h3>
+    <img src="../assets/library.png" alt="" class="logo-img ms-3">
+  </div>
+  
 
   <div class="d-flex">
     <button 
@@ -15,7 +18,7 @@
 
     <button 
     *ngIf="!servicioBackend.isAuthenticate"
-    type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addModal"
+    type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addModal"
     (click) = "cerrarSesion()">Crear Cuenta Estudiante</button>
 
   </div>
@@ -29,10 +32,7 @@
 
   <div  *ngIf="servicioBackend.isAuthenticate"
         class="cls-sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-4">Sidebar</span>
-    </a>
+    
     <hr>
 
     <ul class="nav nav-pills flex-column mb-auto">
@@ -86,19 +86,7 @@
 
     <hr>
 
-    <div class="dropdown">
-      <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>mdo</strong>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" >New project...</a></li>
-        <li><a class="dropdown-item" >Settings</a></li>
-        <li><a class="dropdown-item" >Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" >Sign out</a></li>
-      </ul>
-    </div>
+    <p><small>Grupo 3 Web-App</small></p>
 
   </div>
 
